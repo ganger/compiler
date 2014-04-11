@@ -1,0 +1,53 @@
+lex:
+1:const int
+2:letter
+3:+
+4:-
+5:*
+6:/
+7:{
+8:}
+9:(
+10:)
+11:\
+12:break
+13:case
+14:char
+15:continue
+16:default
+17:do
+18:double
+19:else
+20:float
+21:for
+22:if
+23:int
+24:long
+25:return
+26:short
+27:sizeof
+28:void
+29:while
+30:.
+31:;
+32:=
+33:==
+43:!=
+44:!
+45:'
+46:"
+47:const  char
+48:const string
+49:,
+50:++
+51:--
+52:&
+53:&&
+54:|
+55:||
+56:const float
+
+
+
+
+
