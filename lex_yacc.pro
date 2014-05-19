@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     lex.cpp \
-    yacc.cpp
+    yacc.cpp \
+    code.cpp
 
 HEADERS  += mainwindow.h \
     lex.h \
-    yacc.h
+    yacc.h \
+    code.h
 
 FORMS    += mainwindow.ui
 
 OTHER_FILES += \
-    doc.txt
+    doc.txt \
+    table.txt

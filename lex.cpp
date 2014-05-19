@@ -8,12 +8,14 @@ lex::lex()
 
  void lex::load(QString srcCode)
 {
-     string src=srcCode.toStdString();
+    string src=srcCode.toStdString();
     this->run(src);
-
-
+    ofstream outFile;
+    outFile.open("lex.tmp",ios::out);
+    outFile<<lexOutputStr;
+    outFile.close();
+    qDebug()<<"ok";
 }
-
  void lex::run(string code)
  {
      int i;

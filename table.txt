@@ -1,0 +1,30 @@
+PROG	->	BLOCK
+BLOCK	->	{  DECLS  STMTS  }
+DECLS	->	DECLS  DECL
+        ->	empty
+DECL	->	TYPE  id
+TYPE	->	TYPE  [  num  ]
+        ->	basic
+STMTS	->	STMTS  STMT
+        ->	empty
+STMT->	LOC  =  bool  ;
+    ->	if  (  bool  )  STMT
+    ->	if  (  bool  )  STMT  else  STMT
+    ->	while  (  bool  )  STMT
+    ->	do  STMT  while  (  bool  )  ;
+    ->	break  ;
+    ->	BLOCK
+LOC  ->	LOC  [  bool  ] 				-
+     ->	id
+BOOL	->	REL  LOP  REL
+        ->	!  BOOL
+LOP	->	||
+        ->	&&
+REL	->	EXPR  ROP  EXPR
+ROP	->	>,>=,...
+EXPR	->	EXPR  ADD  EXPR
+        ->	EXPR  MUL  EXPR
+        ->	-  EXPR
+        ->	FACTOR
+FACTOR	->	(  EXPR  )
+        ->	.....

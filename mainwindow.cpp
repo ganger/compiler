@@ -18,5 +18,7 @@ void MainWindow::on_pushButton_clicked()
     lex *lexLoader=new lex;
     lexLoader->load(ui->inputText->toPlainText());
     ///
+    yacc *yaccLoader=new yacc;
     ui->outputText->setPlainText(lexLoader->get_lex_qstr());
+
 }

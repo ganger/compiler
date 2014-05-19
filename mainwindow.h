@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include"lex.h"
+#include"yacc.h"
 namespace Ui {
 class MainWindow;
 }
