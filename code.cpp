@@ -16,37 +16,445 @@ NodeReader::NodeReader()
         {
 
             tmpNode->id=tmpstr[1]-'0';
-            for(int i=3;tmpstr[i]!='>';i++)
+            int i=3;
+            for(;tmpstr[i]!=',';i++)
             {
                 str1+=tmpstr[i];
             }
            // QString qs=QString::fromLocal8Bit(str1.c_str());
           //  qDebug()<<qs<<tmpNode->id;
-            str1="";
+            //str1="";
             tmpNode->content=str1;
+            string str2="";
+            i++;
+            for(;tmpstr[i]!='\n';i++)
+            {
+                str2+=tmpstr[i];
+            }
+            tmpNode->sline=str2;
+         //   QString qs=QString::fromLocal8Bit(str2.c_str());
+           // qDebug()<<qs;
             nodeList->append(*tmpNode);
             free(tmpNode);
         }
         else if(','==tmpstr[3])
         {
             tmpNode->id=(tmpstr[1]-'0')*10+(tmpstr[2]-'0');
-            for(int i=4;tmpstr[i]!='>';i++)
+            int i=4;
+            for(;tmpstr[i]!=',';i++)
             {
                 str1+=tmpstr[i];
             }
            // QString qs=QString::fromLocal8Bit(str1.c_str());
            // qDebug()<<qs<<tmpNode->id;
-            str1="";
+            //str1="";
             tmpNode->content=str1;
+            i++;
+            string str2="";
+            for(;tmpstr[i]!='\n';i++)
+            {
+                str2+=tmpstr[i];
+            }
+            tmpNode->sline=str2;
             nodeList->append(*tmpNode);
             free(tmpNode);
 
 
         }
     }
+
+    this->initial_predict_table();
 }
 QList<struct Node>* NodeReader::get_head()
 {
     return nodeList;
 
 }
+
+void NodeReader::initial_predict_table()
+{
+    tableList=new QList<PredictTable>;
+    PredictTable *tmptable;
+
+    tmptable=new PredictTable;
+    tmptable->inputId=60;   //program
+    tmptable->matchingId=7;// '{'
+    tmptable->changingNode.append(61);
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=61;       //block
+    tmptable->matchingId=7;
+    tmptable->changingNode.append(7);
+    tmptable->changingNode.append(62);
+    tmptable->changingNode.append(64);
+    tmptable->changingNode.append(8);
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=62;   //decls
+    tmptable->matchingId=14;  //type
+    tmptable->changingNode.append(63); //decl
+    tmptable->changingNode.append(62);
+    this->tableList->append(*tmptable);
+    free(tmptable);
+    for(int i=1;i<60;i++)
+    {
+        if(14==i)
+            continue;
+        tmptable=new PredictTable;
+        tmptable->inputId=62;   //decls
+        tmptable->matchingId=i;
+        tmptable->changingNode.append(57); //empty
+        this->tableList->append(*tmptable);
+        free(tmptable);
+
+    }
+
+    tmptable=new PredictTable;
+    tmptable->inputId=63;   //decl
+    tmptable->matchingId=14;
+    tmptable->changingNode.append(14); //type
+    tmptable->changingNode.append(2); //id
+    tmptable->changingNode.append(31); //;
+    this->tableList->append(*tmptable);
+    free(tmptable);
+  ///////////////////stmts//////////////////////
+    tmptable=new PredictTable;
+    tmptable->inputId=64;   //stmts
+    tmptable->matchingId=7; //'{'
+    tmptable->changingNode.append(65); //stmt
+    tmptable->changingNode.append(64);  //stmts
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=64;   //stmts
+    tmptable->matchingId=2; // id
+    tmptable->changingNode.append(65); //stmt
+    tmptable->changingNode.append(64);  //stmts
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=64;   //stmts
+    tmptable->matchingId=22; //if
+    tmptable->changingNode.append(65); //stmt
+    tmptable->changingNode.append(64);  //stmts
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=64;   //stmts
+    tmptable->matchingId=29; //while
+    tmptable->changingNode.append(65); //stmt
+    tmptable->changingNode.append(64);  //stmts
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    tmptable=new PredictTable;
+    tmptable->inputId=64;   //stmts
+    tmptable->matchingId=12; //break
+    tmptable->changingNode.append(65); //stmt
+    tmptable->changingNode.append(64);  //stmts
+    this->tableList->append(*tmptable);
+    free(tmptable);
+
+    ///////////////////stmt//////////////////////
+      tmptable=new PredictTable;
+      tmptable->inputId=65;   //stmt
+      tmptable->matchingId=7; //'{'
+      tmptable->changingNode.append(61); //block
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=65;   //stmt
+      tmptable->matchingId=2; // id
+      tmptable->changingNode.append(2); //id
+      tmptable->changingNode.append(32);  //=
+      tmptable->changingNode.append(73);  //expr
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=65;   //stmt
+      tmptable->matchingId=22; //if
+      tmptable->changingNode.append(66); //if_stmt
+      tmptable->changingNode.append(67);  //else_part
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=65;   //stmt
+      tmptable->matchingId=29; //while
+      tmptable->changingNode.append(29); //while
+      tmptable->changingNode.append(9);  //(
+      tmptable->changingNode.append(68);  //bool
+      tmptable->changingNode.append(10);  //)
+      tmptable->changingNode.append(61);  //block
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=65;   //stmt
+      tmptable->matchingId=12; //break
+      tmptable->changingNode.append(12); // break
+      tmptable->changingNode.append(31);  // ;
+      this->tableList->append(*tmptable);
+      free(tmptable);
+    ////////////////////////end stmt////////////////
+
+      tmptable=new PredictTable;
+      tmptable->inputId=66;   //if_stmt
+      tmptable->matchingId=22; //if
+      tmptable->changingNode.append(22); // if
+      tmptable->changingNode.append(9);  // (
+      tmptable->changingNode.append(68); // bool
+      tmptable->changingNode.append(10);  // )
+      tmptable->changingNode.append(68); // block
+      tmptable->changingNode.append(67);  // else_part
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=67;   //else_part
+      tmptable->matchingId=19; //else
+      tmptable->changingNode.append(19); // else
+      tmptable->changingNode.append(68);  // block
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      for(int i=0;i<60;i++)
+      {
+          if(19==i)
+                continue;
+          tmptable=new PredictTable;
+          tmptable->inputId=67;   //else_part
+          tmptable->matchingId=i;
+          tmptable->changingNode.append(57); // empty
+          this->tableList->append(*tmptable);
+          free(tmptable);
+      }
+
+      tmptable=new PredictTable;
+      tmptable->inputId=68;   //bool
+      tmptable->matchingId=2; //id
+      tmptable->changingNode.append(70); // rel
+      tmptable->changingNode.append(69);  // lop
+      tmptable->changingNode.append(70);  // rel
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=69;   //lop
+      tmptable->matchingId=55; //||
+      tmptable->changingNode.append(55); // ||
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=69;   //lop
+      tmptable->matchingId=53; //&&
+      tmptable->changingNode.append(53); // &&
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+
+      tmptable=new PredictTable;
+      tmptable->inputId=70;   //rel
+      tmptable->matchingId=2; //id
+      tmptable->changingNode.append(73); // expr
+      tmptable->changingNode.append(71); // rop
+      tmptable->changingNode.append(73); // expr
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=71;   //rop
+      tmptable->matchingId=23; //<
+      tmptable->changingNode.append(23); // <
+      tmptable->changingNode.append(72); // rope
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=71;   //rop
+      tmptable->matchingId=24; //>
+      tmptable->changingNode.append(24); // >
+      tmptable->changingNode.append(72); // rope
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=72;   //rope
+      tmptable->matchingId=32; //=
+      tmptable->changingNode.append(32); // =
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      for(int i=0;i<60;i++)
+      {
+          if(32==i)
+              continue;
+          tmptable=new PredictTable;
+          tmptable->inputId=72;   //rope
+          tmptable->matchingId=i; //
+          tmptable->changingNode.append(57); // empty
+          this->tableList->append(*tmptable);
+          free(tmptable);
+      }
+
+      tmptable=new PredictTable;
+      tmptable->inputId=73;   //expr
+      tmptable->matchingId=9; //(
+      tmptable->changingNode.append(77); // T
+      tmptable->changingNode.append(76); // E'
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=73;   //expr
+      tmptable->matchingId=2; //ID
+      tmptable->changingNode.append(77); // T
+      tmptable->changingNode.append(76); // E'
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+      tmptable=new PredictTable;
+      tmptable->inputId=75;   //FACTOR
+      tmptable->matchingId=9; //(
+      tmptable->changingNode.append(9); // (
+      tmptable->changingNode.append(73); // EXPR
+      tmptable->changingNode.append(10); // )
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+      tmptable=new PredictTable;
+      tmptable->inputId=75;   //FACTOR
+      tmptable->matchingId=2; //id
+      tmptable->changingNode.append(2); // id
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+      tmptable=new PredictTable;
+      tmptable->inputId=75;   //FACTOR
+      tmptable->matchingId=1; //const int
+      tmptable->changingNode.append(1); //
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=75;   //FACTOR
+      tmptable->matchingId=56; //const float
+      tmptable->changingNode.append(56); //
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=3; //+
+      tmptable->changingNode.append(3); //+
+      tmptable->changingNode.append(77); //t
+      tmptable->changingNode.append(76); // e'
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+      tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=4; //-
+      tmptable->changingNode.append(4); //-
+      tmptable->changingNode.append(77); //t
+      tmptable->changingNode.append(76); // e'
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=10; //)
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=31; //;
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=77;   //t
+      tmptable->matchingId=9; //(
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=77;   //t
+      tmptable->matchingId=2; //id
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=3; //+
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=4; //-
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=10; //)
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=31; //;
+      tmptable->changingNode.append(57); //empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=5; //*
+      tmptable->changingNode.append(5); //*
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=6; //  /
+      tmptable->changingNode.append(6); //  /
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+}
+
+QList<struct PredictTable>* NodeReader::get_tablelist()
+{
+    return tableList;
+}
+

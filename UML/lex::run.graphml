@@ -845,10 +845,10 @@
     <node id="n47">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
-          <y:Geometry height="40.0" width="80.0" x="-126.97895135309284" y="981.3150209407211"/>
+          <y:Geometry height="40.0" width="99.19999999999999" x="-126.97895135309284" y="981.3150209407211"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="50.34765625" x="14.826171875" y="11.015625">*\.(){};,<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" modelName="custom" textColor="#000000" visible="true" width="79.8203125" x="9.689843749999994" y="11.015625">*\.(){};,[]&lt;&gt;<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -1283,7 +1283,6 @@
       </data>
     </node>
     <node id="n72">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="-127.36620983057642" y="1793.6160776632096"/>
@@ -1335,7 +1334,6 @@
       </data>
     </node>
     <node id="n75">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="12.37805550680963" y="1809.862637714286"/>
@@ -1355,7 +1353,6 @@
       </data>
     </node>
     <node id="n76">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="-15.411997259147881" y="1914.1128261641338"/>
@@ -1423,7 +1420,6 @@
       </data>
     </node>
     <node id="n80">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="-133.59192442137058" y="1975.729071387684"/>
@@ -1443,7 +1439,6 @@
       </data>
     </node>
     <node id="n81">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="29.019584334860497" y="1998.5963148065289"/>
@@ -1463,7 +1458,6 @@
       </data>
     </node>
     <node id="n82">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.small_entity">
           <y:Geometry height="40.0" width="80.0" x="2.976334885620389" y="2097.1341113974104"/>
@@ -1988,7 +1982,6 @@
       </data>
     </edge>
     <edge id="e38" source="n0" target="n71">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2004,7 +1997,6 @@
       </data>
     </edge>
     <edge id="e39" source="n71" target="n73">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2017,7 +2009,6 @@
       </data>
     </edge>
     <edge id="e40" source="n71" target="n74">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2030,7 +2021,6 @@
       </data>
     </edge>
     <edge id="e41" source="n0" target="n77">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -2046,7 +2036,6 @@
       </data>
     </edge>
     <edge id="e42" source="n77" target="n78">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -2059,7 +2048,6 @@
       </data>
     </edge>
     <edge id="e43" source="n77" target="n79">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.bpmn.Connection">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>

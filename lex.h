@@ -18,7 +18,7 @@ public:
     QString get_lex_qstr();
     string get_lex_str();
     void run(string code);
-    void keeped_words(string kWords);
+    void keeped_words(string kWords, string sline);
     bool isNUmber(char);
     bool isLetter(char);
 

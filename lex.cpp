@@ -14,11 +14,13 @@ lex::lex()
     outFile.open("lex.tmp",ios::out);
     outFile<<lexOutputStr;
     outFile.close();
-    qDebug()<<"ok";
+  //  qDebug()<<"ok";
 }
  void lex::run(string code)
  {
      int i;
+     int line=1;
+     string sline="1";
      for(i=0;i<code.size();i++)
      {
          switch(code[i])
@@ -48,7 +50,8 @@ lex::lex()
 
                 }else
                 {
-                    lexOutputStr.append("<6,_>\n");
+
+                    lexOutputStr.append("<6,_,"+sline+"\n");
                 }
             }break;
              // the '+'
@@ -56,11 +59,13 @@ lex::lex()
             {
              if(code[i+1]=='+')
              {
-                 lexOutputStr.append("<50,_>\n");
+
+                 lexOutputStr.append("<50,_,"+sline+"\n");
                  i++;
              }else
              {
-                 lexOutputStr.append("<3,_>\n");
+
+                 lexOutputStr.append("<3,_,"+sline+"\n");
              }
             }break;
              // the '-'
@@ -68,45 +73,47 @@ lex::lex()
             {
                 if(code[i+1]=='-')
                 {
-                    lexOutputStr.append("<51,_>\n");
+                    lexOutputStr.append("<51,_,"+sline+"\n");
                     i++;
                 }else
                 {
-                  lexOutputStr.append("<4,_>\n");
+                  lexOutputStr.append("<4,_,"+sline+"\n");
                 }
              }break;
              //the "*"
-              case '*': lexOutputStr.append("<5,_>\n");break;
-              case '{': lexOutputStr.append("<7,_>\n");break;
-              case '}': lexOutputStr.append("<8,_>\n");break;
-              case '(': lexOutputStr.append("<9,_>\n");break;
-              case ')': lexOutputStr.append("<10,_>\n");break;
-              case '\\': lexOutputStr.append("<11,_>\n");break;//  the '\'
-              case '.': lexOutputStr.append("<30,_>\n");break;
-              case ';': lexOutputStr.append("<31,_>\n");break;
-              case ',': lexOutputStr.append("<49,_>\n");break;
+              case '*': lexOutputStr.append("<5,_,"+sline+"\n");break;
+              case '{': lexOutputStr.append("<7,_,"+sline+"\n");break;
+              case '}': lexOutputStr.append("<8,_,"+sline+"\n");break;
+              case '(': lexOutputStr.append("<9,_,"+sline+"\n");break;
+              case ')': lexOutputStr.append("<10,_,"+sline+"\n");break;
+              case '\\': lexOutputStr.append("<11,_,"+sline+"\n");break;//  the '\'
+              case '.': lexOutputStr.append("<30,_,"+sline+"\n");break;
+              case ';': lexOutputStr.append("<31,_,"+sline+"\n");break;
+              case ',': lexOutputStr.append("<49,_,"+sline+"\n");break;
+              case '>': lexOutputStr.append("<24,_,"+sline+"\n");break;
+              case '<': lexOutputStr.append("<23,_,"+sline+"\n");break;
               case ' ':break;
              //the "="
             case '=':
             {
                 if(code[i+1]=='=')
                 {
-                    lexOutputStr.append("<33,_>\n");
+                    lexOutputStr.append("<33,_,"+sline+"\n");
                     i++;
                 }else
                 {
-                    lexOutputStr.append("<32,_>\n");
+                    lexOutputStr.append("<32,_,"+sline+"\n");
                 }
             }break;
              case '!':
              {
                 if(code[i+1]=='+')
                 {
-                    lexOutputStr.append("<43,_>\n");
+                    lexOutputStr.append("<43,_,"+sline+"\n");
                     i++;
                 }else
                 {
-                    lexOutputStr.append("<44,_>\n");
+                    lexOutputStr.append("<44,_,"+sline+"\n");
                 }
              }break;
             case '"':
@@ -118,7 +125,7 @@ lex::lex()
                     tmpstr+=code[i];
                 }
                 i++;
-                lexOutputStr.append("<48,"+tmpstr+">\n");
+                lexOutputStr.append("<48,"+tmpstr+","+sline+"\n");
             }break;
 
          case '\'':
@@ -130,27 +137,27 @@ lex::lex()
                  tmpstr+=code[i];
              }
              i++;
-             lexOutputStr.append("<47,"+tmpstr+">\n");
+             lexOutputStr.append("<47,"+tmpstr+","+sline+"\n");
          }break;
          case '&':
          {
              if(code[i+1]=='&')
              {
-                 lexOutputStr.append("<53,_>\n");
+                 lexOutputStr.append("<53,_,"+sline+"\n");
                  i++;
              }else
              {
-                 lexOutputStr.append("<52,_>\n");
+                 lexOutputStr.append("<52,_,"+sline+"\n");
              }break;
             case '|':
              {
                  if(code[i+1]=='|')
                  {
-                     lexOutputStr.append("<55,_>\n");
+                     lexOutputStr.append("<55,_,"+sline+"\n");
                      i++;
                  }else
                  {
-                     lexOutputStr.append("<54,_>\n");
+                     lexOutputStr.append("<54,_,"+sline+"\n");
                  }
              }
          }break;
@@ -163,40 +170,40 @@ lex::lex()
                     double tmpNumber=0.0;
                     int tmpInt=int(code[i]-'0');
 
-                 while(this->isNUmber(code[i+1]))
-                 {
-                     tmpInt=tmpInt*10+int(code[i+1]-'0');
-                     i++;
-                     //qDebug()<<tmpInt;
-                 }
-                 number=tmpInt;
-                 if(code[i+1]=='.')
-                 {
-                     i++;
-                     double n=0.1;
-                     while(this->isNUmber(code[i+1]))
-                     {
-                         tmpNumber=tmpNumber+int(code[i+1]-'0')*n;
-                         n=n/10;
-                         i++;
-                     }
-                   //  qDebug()<<tmpNumber;
-                     number=tmpInt+tmpNumber;
+                    while(this->isNUmber(code[i+1]))
+                    {
+                        tmpInt=tmpInt*10+int(code[i+1]-'0');
+                        i++;
+                        //qDebug()<<tmpInt;
+                    }
+                    number=tmpInt;
+                    if(code[i+1]=='.')
+                    {
+                        i++;
+                        double n=0.1;
+                        while(this->isNUmber(code[i+1]))
+                        {
+                            tmpNumber=tmpNumber+int(code[i+1]-'0')*n;
+                            n=n/10;
+                            i++;
+                        }
+                        //  qDebug()<<tmpNumber;
+                        number=tmpInt+tmpNumber;
+                        stringstream ss;
+                        ss<<number;
+                        string tmpstr;
+                        ss>>tmpstr;
+                        lexOutputStr.append("<65,"+tmpstr+","+sline+"\n");
+
+                    }else
+                    {
                      stringstream ss;
                      ss<<number;
                      string tmpstr;
                      ss>>tmpstr;
-                     lexOutputStr.append("<65,"+tmpstr+">\n");
+                     lexOutputStr.append("<1,"+tmpstr+","+sline+"\n");
 
-                 }else
-                 {
-                     stringstream ss;
-                     ss<<number;
-                     string tmpstr;
-                     ss>>tmpstr;
-                     lexOutputStr.append("<1,"+tmpstr+">\n");
-
-                 }
+                    }
 
              }else if(this->isLetter(code[i]))//letter
                 {
@@ -208,7 +215,7 @@ lex::lex()
                         tmpstr+=code[i+1];
                         i++;
                     }
-                    this->keeped_words(tmpstr);
+                    this->keeped_words(tmpstr,sline);
 
                 }else
                 {
@@ -216,8 +223,14 @@ lex::lex()
                     {
                         lexOutputStr.append("invalid character:");
                         lexOutputStr+=code[i];
-                        lexOutputStr.append("\n");
+                        lexOutputStr.append(" in line "+sline+"\n");
                      //   qDebug()<<code[i];
+                    }else if('\n'==code[i])
+                    {
+                        line++;
+                        stringstream ss;
+                        ss<<line;
+                        ss>>sline;
                     }
                 }
 
@@ -229,46 +242,46 @@ lex::lex()
 
  }
 
- void lex::keeped_words(string kWords)
+ void lex::keeped_words(string kWords,string sline)
  {
      if(kWords=="break")
-         lexOutputStr.append("<12,_>\n");
+         lexOutputStr.append("<12,_,"+sline+"\n");
      else if(kWords=="case")
-         lexOutputStr.append("<13,_>\n");
+         lexOutputStr.append("<13,_,"+sline+"\n");
      else if(kWords=="char")
-         lexOutputStr.append("<14,_>\n");
+         lexOutputStr.append("<14,char,"+sline+"\n");
      else if(kWords=="continue")
-         lexOutputStr.append("<15,_>\n");
+         lexOutputStr.append("<15,_,"+sline+"\n");
      else if(kWords=="default")
-         lexOutputStr.append("<16,_>\n");
+         lexOutputStr.append("<16,_,"+sline+"\n");
      else if(kWords=="do")
-         lexOutputStr.append("<17,_>\n");
+         lexOutputStr.append("<17,_,"+sline+"\n");
      else if(kWords=="double")
-         lexOutputStr.append("<18,_>\n");
+         lexOutputStr.append("<14,double,"+sline+"\n");
      else if(kWords=="else")
-         lexOutputStr.append("<19,_>\n");
+         lexOutputStr.append("<19,_,"+sline+"\n");
      else if(kWords=="float")
-         lexOutputStr.append("<20,_>\n");
+         lexOutputStr.append("<14,float,"+sline+"\n");
      else if(kWords=="for")
-         lexOutputStr.append("<21,_>\n");
+         lexOutputStr.append("<21,_,"+sline+"\n");
      else if(kWords=="if")
-         lexOutputStr.append("<22,_>\n");
+         lexOutputStr.append("<22,_,"+sline+"\n");
      else if(kWords=="int")
-         lexOutputStr.append("<23,_>\n");
+         lexOutputStr.append("<14,int,"+sline+"\n");
      else if(kWords=="long")
-         lexOutputStr.append("<24,_>\n");
+         lexOutputStr.append("<14,long,"+sline+"\n");
      else if(kWords=="return")
-         lexOutputStr.append("<25,_>\n");
+         lexOutputStr.append("<25,_,"+sline+"\n");
      else if(kWords=="short")
-         lexOutputStr.append("<26,_>\n");
+         lexOutputStr.append("<14,short,"+sline+"\n");
      else if(kWords=="sizeof")
-         lexOutputStr.append("<27,_>\n");
+         lexOutputStr.append("<27,_,"+sline+"\n");
      else if(kWords=="void")
-         lexOutputStr.append("<28,_>\n");
+         lexOutputStr.append("<14,void,"+sline+"\n");
      else if(kWords=="while")
-         lexOutputStr.append("<29,_>\n");
+         lexOutputStr.append("<29,_,"+sline+"\n");
      else
-         lexOutputStr.append("<2,"+kWords+">\n");
+         lexOutputStr.append("<2,"+kWords+","+sline+"\n");
 
  }
 

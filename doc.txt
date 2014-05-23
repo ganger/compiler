@@ -1,6 +1,6 @@
 lex:
 1:const int
-2:letter
+2:id
 3:+
 4:-
 5:*
@@ -12,21 +12,25 @@ lex:
 11:\
 12:break
 13:case
-14:char
+
+14:type(char,int,float,double,long,short,void)
 15:continue
 16:default
 17:do
-18:double
+
+18:[
 19:else
-20:float
+
+20:]
 21:for
 22:if
-23:int
-24:long
-25:return
-26:short
+
+23:<
+
+24:>
+
 27:sizeof
-28:void
+
 29:while
 30:.
 31:;
@@ -46,6 +50,28 @@ lex:
 54:|
 55:||
 56:const float
+57:empty
+
+/////non final symbol/////
+60:program
+61:block
+62:decls
+63:decl
+64:stmts
+65:stmt
+66:if_stmt
+67:else_part
+68:bool
+69:lop
+70:rel
+71:rop
+72:rope
+73:expr
+//74:op
+75:factor
+76:_E
+77:T
+78:_T
 
 
 
