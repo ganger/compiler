@@ -28,8 +28,11 @@ if_stmt->   if(bool) block
 
 else_part ->else block
         ->empty
-BOOL	->	REL  LOP  REL
+BOOL	->	REL  LOPREL
         ->	!  BOOL
+LOPREL  ->      LOP rel
+        ->      empty
+
 LOP	->	||
         ->	&&
 REL	->	EXPR  ROP  EXPR

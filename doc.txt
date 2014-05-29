@@ -12,25 +12,18 @@ lex:
 11:\
 12:break
 13:case
-
 14:type(char,int,float,double,long,short,void)
 15:continue
 16:default
 17:do
-
 18:[
 19:else
-
 20:]
 21:for
 22:if
-
 23:<
-
 24:>
-
 27:sizeof
-
 29:while
 30:.
 31:;
@@ -72,6 +65,8 @@ lex:
 76:_E
 77:T
 78:_T
+
+79:loprel
 
 
 

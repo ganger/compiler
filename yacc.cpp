@@ -30,6 +30,7 @@ void yacc::run()
             {
                 if(currentId==stackTopNode.id)
                 {
+                    qDebug()<<"matching!";
                     //workingStack.push(stackTopNode);
                     break;
                 }
@@ -76,6 +77,7 @@ void yacc::run()
                 if(currentId==stackTopNode.id)
                 {
                     //workingStack.push(stackTopNode);
+                    qDebug()<<"matching!";
                     break;
                 }
                 else

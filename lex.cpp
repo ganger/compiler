@@ -193,7 +193,7 @@ lex::lex()
                         ss<<number;
                         string tmpstr;
                         ss>>tmpstr;
-                        lexOutputStr.append("<65,"+tmpstr+","+sline+"\n");
+                        lexOutputStr.append("<56,"+tmpstr+","+sline+"\n");
 
                     }else
                     {

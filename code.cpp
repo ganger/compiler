@@ -176,6 +176,7 @@ void NodeReader::initial_predict_table()
       tmptable->changingNode.append(2); //id
       tmptable->changingNode.append(32);  //=
       tmptable->changingNode.append(73);  //expr
+      tmptable->changingNode.append(31);  // ;
       this->tableList->append(*tmptable);
       free(tmptable);
 
@@ -238,16 +239,54 @@ void NodeReader::initial_predict_table()
           this->tableList->append(*tmptable);
           free(tmptable);
       }
-
+/////////////////////////begin bool///////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=68;   //bool
       tmptable->matchingId=2; //id
       tmptable->changingNode.append(70); // rel
-      tmptable->changingNode.append(69);  // lop
+      tmptable->changingNode.append(79);  // loprel
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=68;   //bool
+      tmptable->matchingId=44; // !
+      tmptable->changingNode.append(44); // !
+      tmptable->changingNode.append(68);  // bool
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+
+//////////////////////////end bool//////////////////////////////
+////////////////////////begin loprel////////////////////////////
+      tmptable=new PredictTable;
+      tmptable->inputId=79;   //loprel
+      tmptable->matchingId=55; // ||
+      tmptable->changingNode.append(69); // lop
       tmptable->changingNode.append(70);  // rel
       this->tableList->append(*tmptable);
       free(tmptable);
 
+      tmptable=new PredictTable;
+      tmptable->inputId=79;   //loprel
+      tmptable->matchingId=53; // &&
+      tmptable->changingNode.append(69); // lop
+      tmptable->changingNode.append(70);  // rel
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      for(int i=0;i<60;i++)
+      {
+          if((53==i)||(55==i))
+               continue;
+          tmptable=new PredictTable;
+          tmptable->inputId=79;   //loprel
+          tmptable->matchingId=i; // &&
+          tmptable->changingNode.append(57); // empty
+          this->tableList->append(*tmptable);
+          free(tmptable);
+      }
+///////////////////////end loprel////////////////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=69;   //lop
       tmptable->matchingId=55; //||
@@ -280,7 +319,7 @@ void NodeReader::initial_predict_table()
       tmptable->changingNode.append(72); // rope
       this->tableList->append(*tmptable);
       free(tmptable);
-
+//////////////////////////////////////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=71;   //rop
       tmptable->matchingId=24; //>
@@ -289,6 +328,13 @@ void NodeReader::initial_predict_table()
       this->tableList->append(*tmptable);
       free(tmptable);
 
+      tmptable=new PredictTable;
+      tmptable->inputId=71;   //rop
+      tmptable->matchingId=33; //==
+      tmptable->changingNode.append(33); // ==
+      this->tableList->append(*tmptable);
+      free(tmptable);
+////////////////////////////////////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=72;   //rope
       tmptable->matchingId=32; //=
@@ -307,12 +353,13 @@ void NodeReader::initial_predict_table()
           this->tableList->append(*tmptable);
           free(tmptable);
       }
-
+//////////////////expr////////////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=73;   //expr
       tmptable->matchingId=9; //(
       tmptable->changingNode.append(77); // T
       tmptable->changingNode.append(76); // E'
+
       this->tableList->append(*tmptable);
       free(tmptable);
 
@@ -321,10 +368,29 @@ void NodeReader::initial_predict_table()
       tmptable->matchingId=2; //ID
       tmptable->changingNode.append(77); // T
       tmptable->changingNode.append(76); // E'
+
       this->tableList->append(*tmptable);
       free(tmptable);
 
+      tmptable=new PredictTable;
+      tmptable->inputId=73;   //expr
+      tmptable->matchingId=1; //const int
+      tmptable->changingNode.append(77); // T
+      tmptable->changingNode.append(76); // E'
 
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=73;   //expr
+      tmptable->matchingId=56; //const float
+      tmptable->changingNode.append(77); // T
+      tmptable->changingNode.append(76); // E'
+
+      this->tableList->append(*tmptable);
+      free(tmptable);
+/////////////////////////end expr/////////////////////////
+////////////////////////begin factor/////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=75;   //FACTOR
       tmptable->matchingId=9; //(
@@ -356,7 +422,7 @@ void NodeReader::initial_predict_table()
       tmptable->changingNode.append(56); //
       this->tableList->append(*tmptable);
       free(tmptable);
-
+//////////////////////////end factor////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=76;   //_e
       tmptable->matchingId=3; //+
@@ -391,6 +457,20 @@ void NodeReader::initial_predict_table()
       free(tmptable);
 
       tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=23; //  <
+      tmptable->changingNode.append(57); //  empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=76;   //_e
+      tmptable->matchingId=24; //  >
+      tmptable->changingNode.append(57); //  empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+///////////////t//////////////////////
+      tmptable=new PredictTable;
       tmptable->inputId=77;   //t
       tmptable->matchingId=9; //(
       tmptable->changingNode.append(75); //factor
@@ -406,6 +486,22 @@ void NodeReader::initial_predict_table()
       this->tableList->append(*tmptable);
       free(tmptable);
 
+      tmptable=new PredictTable;
+      tmptable->inputId=77;   //t
+      tmptable->matchingId=1; //const int
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=77;   //t
+      tmptable->matchingId=56; //const float
+      tmptable->changingNode.append(75); //factor
+      tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+/////////////////end t/////////////////////////////////
       tmptable=new PredictTable;
       tmptable->inputId=78;   //_t
       tmptable->matchingId=3; //+
@@ -449,6 +545,20 @@ void NodeReader::initial_predict_table()
       tmptable->changingNode.append(6); //  /
       tmptable->changingNode.append(75); //factor
       tmptable->changingNode.append(78); //_t
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=23; //  <
+      tmptable->changingNode.append(57); //  empty
+      this->tableList->append(*tmptable);
+      free(tmptable);
+
+      tmptable=new PredictTable;
+      tmptable->inputId=78;   //_t
+      tmptable->matchingId=24; //  >
+      tmptable->changingNode.append(57); //  empty
       this->tableList->append(*tmptable);
       free(tmptable);
 }
