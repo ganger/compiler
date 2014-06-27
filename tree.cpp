@@ -20,7 +20,7 @@ void tree::set_value(string v)
     this->value=v;
 }
 
-void tree::append_children(tree t)
+void tree::append_children(tree* t)
 {
 
     this->children.append(t);
@@ -29,11 +29,11 @@ void tree::append_children(tree t)
 void tree::print_tree() //test function
 {
     qDebug()<<"{";
-    qDebug()<<this->tnode.id;
-    qDebug()<<this->children.length();
+    qDebug()<<"id:"<<this->tnode.id;
+    qDebug()<<"children_num:"<<this->children.length();
     qDebug()<<"}";
     for(int i=0;i<this->children.length();i++)
     {
-        this->children[i].print_tree();
+        this->children[i]->print_tree();
     }
 }

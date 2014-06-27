@@ -26,8 +26,6 @@ void yacc::run()
         while(!workingStack.isEmpty())
         {
             Node stackTopNode=workingStack.pop();
-            tree *testtree=treeStack.pop();
-            treeStack.push(testtree);
             tree *StackTopTree=treeStack.pop();
             if(stackTopNode.id<60) // final symbol
             {
@@ -60,12 +58,10 @@ void yacc::run()
                             if(tmpNode.id!=57)
                             {
                                 tmptree->set_node(tmpNode);
-                                StackTopTree->append_children(*tmptree);
+                                StackTopTree->append_children(tmptree);
                                 treeStack.push(tmptree);
-                                tree* testtree=treeStack.pop();
-                                treeStack.push(testtree);
                                 this->workingStack.push(tmpNode);
-                                free(tmptree);
+
                             }
                             //qDebug()<<tmpNode.id;
                         }
@@ -76,6 +72,7 @@ void yacc::run()
 
             }
             stackTopNode=workingStack.pop();
+            StackTopTree=treeStack.pop();
             if(stackTopNode.id<60) //final symbol
             {
                 if(currentId==stackTopNode.id)
@@ -93,7 +90,10 @@ void yacc::run()
                 }
             }
             else
+            {
                 workingStack.push(stackTopNode);
+                treeStack.push(StackTopTree);
+            }
         }
 
     }

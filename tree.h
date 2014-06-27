@@ -12,13 +12,13 @@ public:
     void set_node(Node);
     void set_type(string);
     void set_value(string);
-    void append_children(tree);
+    void append_children(tree *);
     void print_tree();
 private:
     Node tnode;
     string type;
     string value;
-    QList<tree> children;
+    QList<tree*> children;
 };
 
 #endif // TREE_H
