@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     lex.cpp \
     yacc.cpp \
-    code.cpp
+    code.cpp \
+    tree.cpp
 
 HEADERS  += mainwindow.h \
     lex.h \
     yacc.h \
-    code.h
+    code.h \
+    tree.h
 
 FORMS    += mainwindow.ui
 

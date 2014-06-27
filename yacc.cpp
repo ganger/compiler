@@ -13,25 +13,28 @@ void yacc::run()
     QList<struct Node>* head=nr->get_head();
     QList<struct PredictTable>* ptable=nr->get_tablelist();
 
- //   int aa=ptable->length();
     Node headNode;
     headNode.sline="0";
     headNode.id=60; //program
+    this->root=new tree;
+    this->root->set_node(headNode);
     this->workingStack.push(headNode);
-
-   for(int i=0;i<head->length();i++)
+    this->treeStack.push(root);
+    for(int i=0;i<head->length();i++)
     {
         int currentId=head->at(i).id;
         while(!workingStack.isEmpty())
         {
             Node stackTopNode=workingStack.pop();
-
+            tree *testtree=treeStack.pop();
+            treeStack.push(testtree);
+            tree *StackTopTree=treeStack.pop();
             if(stackTopNode.id<60) // final symbol
             {
                 if(currentId==stackTopNode.id)
                 {
                     qDebug()<<"matching!";
-                    //workingStack.push(stackTopNode);
+
                     break;
                 }
                 else
@@ -52,22 +55,23 @@ void yacc::run()
                         for(int k=ptable->at(j).changingNode.length()-1;k>=0;k--)
                         {
                             Node tmpNode;
+                            tree *tmptree=new tree;
                             tmpNode.id=ptable->at(j).changingNode.at(k);
                             if(tmpNode.id!=57)
+                            {
+                                tmptree->set_node(tmpNode);
+                                StackTopTree->append_children(*tmptree);
+                                treeStack.push(tmptree);
+                                tree* testtree=treeStack.pop();
+                                treeStack.push(testtree);
                                 this->workingStack.push(tmpNode);
-                            qDebug()<<tmpNode.id;
+                                free(tmptree);
+                            }
+                            //qDebug()<<tmpNode.id;
                         }
                         break;
                    qDebug()<<"suc";
                 }
-
-        //        if(j==ptable->length()-1)
-          //      {
-            //        qDebug()<<"err at:";
-
-              //      QString qs=QString::fromLocal8Bit(head->at(i).sline.c_str());
-                //    qDebug()<<qs<<"\n";
-               // }
 
 
             }
@@ -76,7 +80,7 @@ void yacc::run()
             {
                 if(currentId==stackTopNode.id)
                 {
-                    //workingStack.push(stackTopNode);
+
                     qDebug()<<"matching!";
                     break;
                 }
@@ -91,5 +95,8 @@ void yacc::run()
             else
                 workingStack.push(stackTopNode);
         }
+
     }
+    root->print_tree();
+
 }

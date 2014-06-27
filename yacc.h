@@ -4,6 +4,7 @@
 #include<QList>
 #include<QDebug>
 #include<QStack>
+#include"tree.h"
 class yacc
 {
 public:
@@ -11,6 +12,8 @@ public:
     void run();
 private:
     QStack<struct Node> workingStack;
+    QStack<tree*> treeStack;
+    tree *root;
 
 };
 
