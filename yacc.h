@@ -10,6 +10,7 @@ class yacc
 public:
     yacc();
     void run();
+    tree* get_root();
 private:
     QStack<struct Node> workingStack;
     QStack<tree*> treeStack;

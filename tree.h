@@ -14,6 +14,9 @@ public:
     void set_value(string);
     void append_children(tree *);
     void print_tree();
+    int get_children_lenth();
+    QList<tree*> get_chindren();
+    Node get_node();
 private:
     Node tnode;
     string type;

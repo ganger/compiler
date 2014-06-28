@@ -4,6 +4,7 @@
 #include <QWidget>
 #include"lex.h"
 #include"yacc.h"
+#include"meaning.h"
 namespace Ui {
 class MainWindow;
 }

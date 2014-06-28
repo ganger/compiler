@@ -31,8 +31,11 @@ void yacc::run()
             {
                 if(currentId==stackTopNode.id)
                 {
+                    if(currentId==1||currentId==56)
+                    {
+                        StackTopTree->set_value(head->at(i).content);
+                    }
                     qDebug()<<"matching!";
-
                     break;
                 }
                 else
@@ -97,6 +100,11 @@ void yacc::run()
         }
 
     }
-    root->print_tree();
 
+}
+
+tree* yacc::get_root()
+{
+
+    return root;
 }
