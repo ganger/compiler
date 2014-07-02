@@ -19,6 +19,7 @@ void MainWindow::on_pushButton_clicked()
     lexLoader->load(ui->inputText->toPlainText());
     ///
     meaning *m=new meaning;
+  //  NodeReader *nr=new NodeReader;
     ui->outputText->setPlainText(lexLoader->get_lex_qstr());
 
 }

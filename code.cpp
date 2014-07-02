@@ -8,11 +8,46 @@ NodeReader::NodeReader()
     string tmpstr;
     string str1="";
     nodeList=new QList<struct Node>;
-    while(!lexTmpFile.eof())
+   while(!lexTmpFile.eof())
     {
         lexTmpFile>>tmpstr;
         struct Node *tmpNode=new struct Node;
-        if(','==tmpstr[2])
+        string sid="";
+        int i;
+        for(i=1;tmpstr[i]!=',';i++)
+        {
+            sid+=tmpstr[i];
+        }
+        if(1==sid.length())
+        {
+             tmpNode->id=sid[0]-'0';
+        }
+        else if(2==sid.length())
+        {
+              tmpNode->id=(sid[0]-'0')*10+(sid[1]-'0');
+        }
+        else
+            qDebug()<<"error code 1";
+
+        i++;
+        string scontent="";
+        for(;tmpstr[i]!=',';i++)
+        {
+            scontent+=tmpstr[i];
+        }
+        tmpNode->content=scontent;
+        string line="";
+        i++;
+        for(;i<tmpstr.length();i++)
+        {
+            line+=tmpstr[i];
+        }
+        tmpNode->sline=line;
+        nodeList->append(*tmpNode);
+        free(tmpNode);
+     //   QString qs=QString::fromLocal8Bit(scontent.c_str());
+       // qDebug()<<qs;
+   /*     if(','==tmpstr[2])
         {
 
             tmpNode->id=tmpstr[1]-'0';
@@ -60,7 +95,8 @@ NodeReader::NodeReader()
             free(tmpNode);
 
 
-        }
+        }*/
+
     }
 
     this->initial_predict_table();

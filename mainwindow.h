@@ -5,6 +5,7 @@
 #include"lex.h"
 #include"yacc.h"
 #include"meaning.h"
+#include"code.h"
 namespace Ui {
 class MainWindow;
 }
