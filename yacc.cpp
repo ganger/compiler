@@ -35,7 +35,11 @@ void yacc::run()
                     {
                         StackTopTree->set_value(head->at(i).content);
                     }
-                    qDebug()<<"matching!";
+                    if(currentId==14)
+                    {
+                        StackTopTree->set_type(head->at(i).content);
+                    }
+                  //  qDebug()<<"matching!";
                     break;
                 }
                 else
@@ -80,8 +84,15 @@ void yacc::run()
             {
                 if(currentId==stackTopNode.id)
                 {
-
-                    qDebug()<<"matching!";
+                    if(currentId==1||currentId==56)
+                    {
+                        StackTopTree->set_value(head->at(i).content);
+                    }
+                    if(currentId==14)
+                    {
+                        StackTopTree->set_type(head->at(i).content);
+                    }
+                //    qDebug()<<"matching!";
                     break;
                 }
                 else

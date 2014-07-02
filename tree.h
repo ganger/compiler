@@ -17,6 +17,8 @@ public:
     int get_children_lenth();
     QList<tree*> get_chindren();
     Node get_node();
+    string get_value();
+    string get_type();
 private:
     Node tnode;
     string type;

@@ -53,3 +53,13 @@ Node tree::get_node()
 {
     return this->tnode;
 }
+
+string tree::get_value()
+{
+    return value;
+}
+
+string tree::get_type()
+{
+    return type;
+}

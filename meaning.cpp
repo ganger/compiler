@@ -6,7 +6,7 @@ meaning::meaning()
     yaccLoader->run();
     this->root=yaccLoader->get_root();
     this->foreach_tree(root);
-    root->print_tree();
+  //  root->print_tree();
 
 }
 
@@ -20,10 +20,13 @@ void meaning::foreach_tree(tree* t)
             foreach_tree(t->get_chindren().at(i));
         }
 
-            if(t->get_node().id==63)//stmt
+            if(t->get_node().id==63)//decls
             {
-                if(t->get_chindren().at(0)->get_node().content=="int")
+             //   string s=t->get_chindren().at(2)->get_type();
+            //    qDebug()<<QString::fromLocal8Bit(s.c_str());
+                if(t->get_chindren().at(0)->get_type()=="int")
                 {
+
                     t->get_chindren().at(1)->set_type("int");
                 }
                 if(t->get_chindren().at(0)->get_node().content=="float")

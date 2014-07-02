@@ -45,9 +45,9 @@ NodeReader::NodeReader()
             {
                 str1+=tmpstr[i];
             }
-           // QString qs=QString::fromLocal8Bit(str1.c_str());
-           // qDebug()<<qs<<tmpNode->id;
-            //str1="";
+            QString qs=QString::fromLocal8Bit(str1.c_str());
+            qDebug()<<qs<<tmpNode->id;
+            str1="";
             tmpNode->content=str1;
             i++;
             string str2="";
