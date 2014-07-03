@@ -39,6 +39,11 @@ void yacc::run()
                     {
                         StackTopTree->set_type(head->at(i).content);
                     }
+                    if(currentId==2)
+                    {
+                        string s=head->at(i).content;
+                        StackTopTree->set_value(head->at(i).content);
+                    }
                   //  qDebug()<<"matching!";
                     break;
                 }
@@ -91,6 +96,11 @@ void yacc::run()
                     if(currentId==14)
                     {
                         StackTopTree->set_type(head->at(i).content);
+                    }
+                    if(currentId==2)
+                    {
+                        string s=head->at(i).content;
+                        StackTopTree->set_value(head->at(i).content);
                     }
                 //    qDebug()<<"matching!";
                     break;

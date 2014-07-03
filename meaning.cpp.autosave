@@ -221,7 +221,7 @@ void meaning::foreach_tree(tree* t)
                 t->set_value(t->get_chindren().at(1)->get_value());
             }
         }
-        if((t->get_node().id==65)&&(t->get_chindren().length()==4))//
+        if((t->get_node().id==65)&&(t->get_chindren().length()==4))//  id=expr
         {
             if(t->get_chindren().at(3)->get_node().id==2)
             {
