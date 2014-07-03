@@ -47,56 +47,6 @@ NodeReader::NodeReader()
         free(tmpNode);
      //   QString qs=QString::fromLocal8Bit(scontent.c_str());
        // qDebug()<<qs;
-   /*     if(','==tmpstr[2])
-        {
-
-            tmpNode->id=tmpstr[1]-'0';
-            int i=3;
-            for(;tmpstr[i]!=',';i++)
-            {
-                str1+=tmpstr[i];
-            }
-           // QString qs=QString::fromLocal8Bit(str1.c_str());
-          //  qDebug()<<qs<<tmpNode->id;
-            //str1="";
-            tmpNode->content=str1;
-            string str2="";
-            i++;
-            for(;tmpstr[i]!='\n';i++)
-            {
-                str2+=tmpstr[i];
-            }
-            tmpNode->sline=str2;
-         //   QString qs=QString::fromLocal8Bit(str2.c_str());
-           // qDebug()<<qs;
-            nodeList->append(*tmpNode);
-            free(tmpNode);
-        }
-        else if(','==tmpstr[3])
-        {
-            tmpNode->id=(tmpstr[1]-'0')*10+(tmpstr[2]-'0');
-            int i=4;
-            for(;tmpstr[i]!=',';i++)
-            {
-                str1+=tmpstr[i];
-            }
-            QString qs=QString::fromLocal8Bit(str1.c_str());
-            qDebug()<<qs<<tmpNode->id;
-            str1="";
-            tmpNode->content=str1;
-            i++;
-            string str2="";
-            for(;tmpstr[i]!='\n';i++)
-            {
-                str2+=tmpstr[i];
-            }
-            tmpNode->sline=str2;
-            nodeList->append(*tmpNode);
-            free(tmpNode);
-
-
-        }*/
-
     }
 
     this->initial_predict_table();

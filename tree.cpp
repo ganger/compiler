@@ -32,6 +32,7 @@ void tree::print_tree() //test function
     qDebug()<<"id:"<<this->tnode.id;
     qDebug()<<"children_num:"<<this->children.length();
     qDebug()<<"type:"<<QString::fromLocal8Bit(this->type.c_str());
+    qDebug()<<"value:"<<QString::fromLocal8Bit(this->value.c_str());
     qDebug()<<"}";
     for(int i=0;i<this->children.length();i++)
     {
