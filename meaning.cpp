@@ -5,7 +5,7 @@ meaning::meaning()
     yacc* yaccLoader=new yacc;
     yaccLoader->run();
     this->root=yaccLoader->get_root();
-
+    this->foreach_type(root);
     this->foreach_tree(root);
     //root->print_tree();
     /*for(int i=0;i<idList->length();i++)
@@ -13,7 +13,77 @@ meaning::meaning()
         qDebug()<<QString::fromLocal8Bit(idList->at(i).id.c_str());
         qDebug()<<QString::fromLocal8Bit(idList->at(i).type.c_str());
     }*/
+  qDebug()<<QString::number(idList.length());
+}
 
+void meaning::foreach_type(tree *t)
+{
+    int i;
+    for(i=0;i<t->get_children_lenth();i++)
+    {
+        if(t->get_children_lenth()!=0)
+        {
+            foreach_type(t->get_chindren().at(i));
+        }
+        if(t->get_node().id==63)//decl
+        {
+
+            if(t->get_chindren().at(2)->get_type()=="int")
+            {
+                bool exit=false;
+                for(int i=0;i<idList.length();i++)
+                {
+                    if(t->get_chindren().at(1)->get_value()==idList.at(i).id)
+                    {
+                        exit=true;
+                        if("int"!=idList.at(i).type)
+                        {
+                            qDebug()<<"conflicting types ";
+
+                        }
+                    }
+                }
+                if(false==exit)
+                {
+                    ids *tmpid=new ids;
+                    tmpid->type="int";
+                    tmpid->id=t->get_chindren().at(1)->get_value();
+                    this->idList.append(*tmpid);
+                }
+            }
+            if(t->get_chindren().at(2)->get_type()=="float")
+            {
+                bool exit=false;
+                for(int i=0;i<idList.length();i++)
+                {
+                    if(t->get_chindren().at(1)->get_value()==idList.at(i).id)
+                    {
+                        exit=true;
+                        if("float"!=idList.at(i).type)
+                        {
+                            qDebug()<<"conflicting types ";
+
+                        }
+                    }
+                }
+                if(false==exit)
+                {
+                    ids *tmpid=new ids;
+                    tmpid->type="float";
+                    tmpid->id=t->get_chindren().at(1)->get_value();
+                    this->idList.append(*tmpid);
+                }
+            }
+            if(t->get_chindren().at(2)->get_type()=="char")
+            {
+            //    t->get_chindren().at(1)->set_type("char");
+            }
+            if(t->get_chindren().at(2)->get_type()=="void")
+            {
+             //   t->get_chindren().at(1)->set_type("void");
+            }
+        }
+    }
 }
 
 void meaning::foreach_tree(tree* t)
@@ -26,27 +96,7 @@ void meaning::foreach_tree(tree* t)
             foreach_tree(t->get_chindren().at(i));
         }
 
-        if(t->get_node().id==63)//decl
-        {
-   //             string s=t->get_chindren().at(2)->get_type();
-     //           qDebug()<<QString::fromLocal8Bit(s.c_str());
-            if(t->get_chindren().at(2)->get_type()=="int")
-            {
-                t->get_chindren().at(1)->set_type("int");
-            }
-            if(t->get_chindren().at(2)->get_type()=="float")
-            {
-                t->get_chindren().at(1)->set_type("float");
-            }
-            if(t->get_chindren().at(2)->get_type()=="char")
-            {
-                t->get_chindren().at(1)->set_type("char");
-            }
-            if(t->get_chindren().at(2)->get_type()=="void")
-            {
-                t->get_chindren().at(1)->set_type("void");
-            }
-        }
+
         if((t->get_node().id==78)&&(t->get_chindren().at(0)->get_type()=="")&&(t->get_chindren().at(0)->get_value()==""))
             //t_ and t_.children is null
         {
@@ -221,11 +271,26 @@ void meaning::foreach_tree(tree* t)
                 t->set_value(t->get_chindren().at(1)->get_value());
             }
         }
-        if((t->get_node().id==65)&&(t->get_chindren().length()==4))//
+        if((t->get_node().id==65)&&(t->get_chindren().length()==4))//  id=expr
         {
             if(t->get_chindren().at(3)->get_node().id==2)
             {
-                t->get_chindren().at(3)->set_value(t->get_chindren().at(1)->get_value());
+             //   qDebug()<<"inner:"<<QString::number(idList.length());
+                bool declared=false;
+                for(int i=0;i<idList.length();i++)
+                {
+
+                    if(t->get_chindren().at(3)->get_value()==idList.at(i).id)
+                    {
+                        declared=true;
+                   //     qDebug()<<"ok";
+                    }
+
+                }
+                if(false==declared||idList.length()==0)
+                {
+                    qDebug()<<QString::fromLocal8Bit(t->get_chindren().at(3)->get_value().c_str())<<" was not declared";
+                }
             }
         }
     }

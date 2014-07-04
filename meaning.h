@@ -11,8 +11,10 @@ class meaning
 public:
     meaning();
     void foreach_tree(tree*);
+    void foreach_type(tree*);
 private:
     tree* root;
+    QList<ids> idList;
 };
 
 #endif // MEANING_H

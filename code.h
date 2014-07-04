@@ -31,4 +31,10 @@ private:
 
 };
 
+struct ids
+{
+    string id;
+    string type;
+};
+
 #endif // CODE_H
