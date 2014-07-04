@@ -14,15 +14,18 @@ public:
     void set_value(string);
     void append_children(tree *);
     void print_tree();
+    void set_name(string);
     int get_children_lenth();
     QList<tree*> get_chindren();
     Node get_node();
     string get_value();
     string get_type();
+    string get_name();
 private:
     Node tnode;
     string type;
     string value;
+    string name;
     QList<tree*> children;
 };
 

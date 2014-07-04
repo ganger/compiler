@@ -6,8 +6,9 @@ meaning::meaning()
     yaccLoader->run();
     this->root=yaccLoader->get_root();
     this->foreach_type(root);
+
     this->foreach_tree(root);
-    //root->print_tree();
+    root->print_tree();
     /*for(int i=0;i<idList->length();i++)
     {
         qDebug()<<QString::fromLocal8Bit(idList->at(i).id.c_str());
@@ -33,7 +34,7 @@ void meaning::foreach_type(tree *t)
                 bool exit=false;
                 for(int i=0;i<idList.length();i++)
                 {
-                    if(t->get_chindren().at(1)->get_value()==idList.at(i).id)
+                    if(t->get_chindren().at(1)->get_name()==idList.at(i).id)
                     {
                         exit=true;
                         if("int"!=idList.at(i).type)
@@ -47,7 +48,7 @@ void meaning::foreach_type(tree *t)
                 {
                     ids *tmpid=new ids;
                     tmpid->type="int";
-                    tmpid->id=t->get_chindren().at(1)->get_value();
+                    tmpid->id=t->get_chindren().at(1)->get_name();
                     this->idList.append(*tmpid);
                 }
             }
@@ -56,7 +57,7 @@ void meaning::foreach_type(tree *t)
                 bool exit=false;
                 for(int i=0;i<idList.length();i++)
                 {
-                    if(t->get_chindren().at(1)->get_value()==idList.at(i).id)
+                    if(t->get_chindren().at(1)->get_name()==idList.at(i).id)
                     {
                         exit=true;
                         if("float"!=idList.at(i).type)
@@ -70,7 +71,7 @@ void meaning::foreach_type(tree *t)
                 {
                     ids *tmpid=new ids;
                     tmpid->type="float";
-                    tmpid->id=t->get_chindren().at(1)->get_value();
+                    tmpid->id=t->get_chindren().at(1)->get_name();
                     this->idList.append(*tmpid);
                 }
             }
@@ -280,16 +281,16 @@ void meaning::foreach_tree(tree* t)
                 for(int i=0;i<idList.length();i++)
                 {
 
-                    if(t->get_chindren().at(3)->get_value()==idList.at(i).id)
+                    if(t->get_chindren().at(3)->get_name()==idList.at(i).id)
                     {
                         declared=true;
-                   //     qDebug()<<"ok";
+                        t->get_chindren().at(3)->set_value(t->get_chindren().at(1)->get_value());
                     }
 
                 }
                 if(false==declared||idList.length()==0)
                 {
-                    qDebug()<<QString::fromLocal8Bit(t->get_chindren().at(3)->get_value().c_str())<<" was not declared";
+                    qDebug()<<QString::fromLocal8Bit(t->get_chindren().at(3)->get_name().c_str())<<" was not declared";
                 }
             }
         }

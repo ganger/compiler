@@ -42,7 +42,7 @@ void yacc::run()
                     if(currentId==2)
                     {
                         string s=head->at(i).content;
-                        StackTopTree->set_value(head->at(i).content);
+                        StackTopTree->set_name(head->at(i).content);
                     }
                   //  qDebug()<<"matching!";
                     break;
@@ -100,7 +100,7 @@ void yacc::run()
                     if(currentId==2)
                     {
                         string s=head->at(i).content;
-                        StackTopTree->set_value(head->at(i).content);
+                        StackTopTree->set_name(head->at(i).content);
                     }
                 //    qDebug()<<"matching!";
                     break;

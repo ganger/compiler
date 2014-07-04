@@ -64,3 +64,13 @@ string tree::get_type()
 {
     return type;
 }
+
+void tree::set_name(string n)
+{
+    this->name=n;
+}
+
+string tree::get_name()
+{
+    return name;
+}
