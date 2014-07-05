@@ -12,9 +12,13 @@ public:
     meaning();
     void foreach_tree(tree*);
     void foreach_type(tree*);
+    QString get_output();
 private:
     tree* root;
     QList<ids> idList;
+    QString output;
+    int rCount;
+    int numOfT_;
 };
 
 #endif // MEANING_H
