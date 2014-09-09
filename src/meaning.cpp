@@ -2,54 +2,110 @@
 
 meaning::meaning()
 {
+    this->output="";
+    this->rCount=0;
+    this->numOfT_=0;
+    this->labelCount=0;
     yacc* yaccLoader=new yacc;
     yaccLoader->run();
     this->root=yaccLoader->get_root();
+    this->foreach_type(root);
 
     this->foreach_tree(root);
-    //root->print_tree();
+ //   root->print_tree();
     /*for(int i=0;i<idList->length();i++)
     {
         qDebug()<<QString::fromLocal8Bit(idList->at(i).id.c_str());
         qDebug()<<QString::fromLocal8Bit(idList->at(i).type.c_str());
     }*/
+  qDebug()<<QString::number(idList.length());
+}
 
+void meaning::foreach_type(tree *t)
+{
+    int i;
+    for(i=t->get_children_lenth()-1;i>=0;i--)
+    {
+        if(t->get_children_lenth()!=0)
+        {
+            foreach_type(t->get_chindren().at(i));
+        }
+        if(t->get_node().id==63)//decl
+        {
+
+            if(t->get_chindren().at(2)->get_type()=="int")
+            {
+                bool exit=false;
+                for(int i=0;i<idList.length();i++)
+                {
+                    if(t->get_chindren().at(1)->get_name()==idList.at(i).id)
+                    {
+                        exit=true;
+                        if("int"!=idList.at(i).type)
+                        {
+                            qDebug()<<"conflicting types ";
+
+                        }
+                    }
+                }
+                if(false==exit)
+                {
+                    ids *tmpid=new ids;
+                    tmpid->type="int";
+                    tmpid->id=t->get_chindren().at(1)->get_name();
+                    this->idList.append(*tmpid);
+                }
+            }
+            if(t->get_chindren().at(2)->get_type()=="float")
+            {
+                bool exit=false;
+                for(int i=0;i<idList.length();i++)
+                {
+                    if(t->get_chindren().at(1)->get_name()==idList.at(i).id)
+                    {
+                        exit=true;
+                        if("float"!=idList.at(i).type)
+                        {
+                            qDebug()<<"conflicting types ";
+
+                        }
+                    }
+                }
+                if(false==exit)
+                {
+                    ids *tmpid=new ids;
+                    tmpid->type="float";
+                    tmpid->id=t->get_chindren().at(1)->get_name();
+                    this->idList.append(*tmpid);
+                }
+            }
+            if(t->get_chindren().at(2)->get_type()=="char")
+            {
+            //    t->get_chindren().at(1)->set_type("char");
+            }
+            if(t->get_chindren().at(2)->get_type()=="void")
+            {
+             //   t->get_chindren().at(1)->set_type("void");
+            }
+        }
+    }
 }
 
 void meaning::foreach_tree(tree* t)
 {
     int i;
-    for(i=0;i<t->get_children_lenth();i++)
+    for(i=t->get_children_lenth()-1;i>=0;i--)
     {
         if(t->get_children_lenth()!=0)
         {
             foreach_tree(t->get_chindren().at(i));
         }
 
-        if(t->get_node().id==63)//decl
-        {
-   //             string s=t->get_chindren().at(2)->get_type();
-     //           qDebug()<<QString::fromLocal8Bit(s.c_str());
-            if(t->get_chindren().at(2)->get_type()=="int")
-            {
-                t->get_chindren().at(1)->set_type("int");
-            }
-            if(t->get_chindren().at(2)->get_type()=="float")
-            {
-                t->get_chindren().at(1)->set_type("float");
-            }
-            if(t->get_chindren().at(2)->get_type()=="char")
-            {
-                t->get_chindren().at(1)->set_type("char");
-            }
-            if(t->get_chindren().at(2)->get_type()=="void")
-            {
-                t->get_chindren().at(1)->set_type("void");
-            }
-        }
+
         if((t->get_node().id==78)&&(t->get_chindren().at(0)->get_type()=="")&&(t->get_chindren().at(0)->get_value()==""))
             //t_ and t_.children is null
         {
+          //  this->numOfT_++;
             if(t->get_chindren().at(2)->get_node().id==5)//*
             {
                 t->set_value(t->get_chindren().at(1)->get_value());
@@ -65,6 +121,7 @@ void meaning::foreach_tree(tree* t)
         if((t->get_node().id==78)&&(t->get_chindren().at(0)->get_type()!="")&&(t->get_chindren().at(0)->get_value()!=""))
             //t_ and t_.children is  not null
         {
+          //  this->numOfT_++;
             if(t->get_chindren().at(2)->get_node().id==5)// *
             {
                 t->set_type("*");
@@ -84,6 +141,17 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                static int count=1;
+                if(count%3==0)
+                {
+                   output+="mul r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2);
+                   output+="\n";
+                   this->numOfT_++;
+                }
+                count++;
             }
             if(t->get_chindren().at(0)->get_type()=="/")
             {
@@ -96,6 +164,17 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                static int count=1;
+                if(count%3==0)
+                {
+                   output+="div r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2);
+                   output+="\n";
+                   this->numOfT_++;
+                }
+                count++;
             }
         }
         if(t->get_node().id==75)//factor
@@ -103,6 +182,12 @@ void meaning::foreach_tree(tree* t)
             if(t->get_chindren().at(0)->get_node().id==1)//int
             {
                 t->set_value(t->get_chindren().at(0)->get_value());
+                output+="mov r";
+                output+=QString::number(this->rCount);
+                output+=" ";
+                output+=QString::fromLocal8Bit(t->get_chindren().at(0)->get_value().c_str());
+                output+="\n";
+                this->rCount++;
             }
             if(t->get_chindren().at(0)->get_node().id==10)// 10 represents ')',which means (expr)
             {
@@ -111,6 +196,7 @@ void meaning::foreach_tree(tree* t)
         }
         if(t->get_node().id==77)// t
         {
+
             if(t->get_chindren().at(0)->get_type()=="*")
             {
                 int tmpInt1,tmpInt2;
@@ -122,6 +208,15 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                if(t->get_chindren().at(1)->get_value()!="")
+                {
+                   output+="mul r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2);
+                   output+="\n";
+                   this->numOfT_++;
+                }
             }
             if(t->get_chindren().at(0)->get_type()=="/")
             {
@@ -134,6 +229,15 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                if(t->get_chindren().at(1)->get_value()!="")
+                {
+                   output+="div r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2);
+                   output+="\n";
+                   this->numOfT_++;
+                }
             }
             if((t->get_chindren().at(0)->get_value()=="")&&(t->get_chindren().at(0)->get_type()==""))// t_=empty
             {
@@ -160,6 +264,8 @@ void meaning::foreach_tree(tree* t)
              if(t->get_chindren().at(2)->get_node().id==3)// +
              {
                  t->set_type("+");
+
+
              }
              if(t->get_chindren().at(2)->get_node().id==4)//  -
              {
@@ -176,6 +282,19 @@ void meaning::foreach_tree(tree* t)
                  string tmpstr;
                  ss>>tmpstr;
                  t->set_value(tmpstr);
+                 static int count=1;
+                 if(count%3==2)
+                 {
+                    output+="add r";
+                    output+=QString::number(this->rCount-1);
+                    output+=" r";
+                    output+=QString::number(this->rCount-2-this->numOfT_);
+                    output+="\n";
+                 }
+                 count++;
+                 qDebug()<<"num:"<<QString::number(this->numOfT_);
+                 this->numOfT_=0;
+
              }
              if(t->get_chindren().at(0)->get_type()=="-")
              {
@@ -188,6 +307,18 @@ void meaning::foreach_tree(tree* t)
                  string tmpstr;
                  ss>>tmpstr;
                  t->set_value(tmpstr);
+                 static int count=1;
+                 if(count%3==2)
+                 {
+                    output+="sub r";
+                    output+=QString::number(this->rCount-1);
+                    output+=" r";
+                    output+=QString::number(this->rCount-2-this->numOfT_);
+                    output+="\n";
+                 }
+                 count++;
+                 qDebug()<<"num:"<<QString::number(this->numOfT_);
+                 this->numOfT_=0;
              }
          }
         if(t->get_node().id==73)// expr
@@ -203,6 +334,17 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                if(t->get_chindren().at(1)->get_value()!="")
+                {
+                   output+="add r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2-this->numOfT_);
+                   output+="\n";
+             //      qDebug()<<"num:"<<QString::number(this->numOfT_);
+
+                }
+                this->numOfT_=0;
             }
             if(t->get_chindren().at(0)->get_type()=="-")
             {
@@ -215,6 +357,17 @@ void meaning::foreach_tree(tree* t)
                 string tmpstr;
                 ss>>tmpstr;
                 t->set_value(tmpstr);
+                if(t->get_chindren().at(1)->get_value()!="")
+                {
+                   output+="sub r";
+                   output+=QString::number(this->rCount-1);
+                   output+=" r";
+                   output+=QString::number(this->rCount-2-this->numOfT_);
+                   output+="\n";
+             //      qDebug()<<"num:"<<QString::number(this->numOfT_);
+
+                }
+                this->numOfT_=0;
             }
             if((t->get_chindren().at(0)->get_type()=="")&&(t->get_chindren().at(0)->get_value()==""))
             {
@@ -225,9 +378,70 @@ void meaning::foreach_tree(tree* t)
         {
             if(t->get_chindren().at(3)->get_node().id==2)
             {
-                t->get_chindren().at(3)->set_value(t->get_chindren().at(1)->get_value());
+             //   qDebug()<<"inner:"<<QString::number(idList.length());
+                bool declared=false;
+                for(int i=0;i<idList.length();i++)
+                {
+
+                    if(t->get_chindren().at(3)->get_name()==idList.at(i).id)
+                    {
+                        declared=true;
+                        t->get_chindren().at(3)->set_value(t->get_chindren().at(1)->get_value());
+                    }
+
+                }
+                if(false==declared||idList.length()==0)
+                {
+                    qDebug()<<QString::fromLocal8Bit(t->get_chindren().at(3)->get_name().c_str())<<" was not declared";
+                }
             }
+        }
+        if(t->get_node().id==70)//rel
+        {
+            static int count=1;
+            if(count%3==0)
+            {
+                output+="cmp r";
+                output+=QString::number(this->rCount-2);
+                output+=" r";
+                output+=QString::number(this->rCount-1);
+               // output+=QString::fromLocal8Bit(t->get_chindren().at(0)->get_value().c_str());
+                output+="\n";
+                if(t->get_chindren().at(1)->get_type()==">")
+                {
+                    output+="jge L";
+                    this->labelCount++;
+                    output+=QString::number(this->labelCount);
+                    output+="\n";
+
+                }
+            }
+            count++;
+        }
+        if(t->get_node().id==71)//rop
+        {
+            if(t->get_chindren().at(1)->get_node().id==24)
+            {
+                t->set_type(">");
+            }
+        }
+        if(t->get_node().id==61)//block
+        {
+            static int count=1;
+            if(count%4==0)
+            {
+                output+="L";
+                output+=QString::number(this->labelCount);
+                output+=":\n";
+                this->labelCount++;
+            }
+            count++;
         }
     }
 
+}
+
+QString meaning::get_output()
+{
+    return this->output;
 }
