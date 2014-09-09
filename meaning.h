@@ -19,6 +19,7 @@ private:
     QString output;
     int rCount;
     int numOfT_;
+    int labelCount;
 };
 
 #endif // MEANING_H
